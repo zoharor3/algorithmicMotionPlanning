@@ -14,7 +14,19 @@ def get_minkowsky_sum(original_shape: Polygon, r: float) -> Polygon:
     :param r: The radius of the rhombus
     :return: The polygon composed from the Minkowsky sums
     """
-    pass
+    tmpObstaclePoints = [11] * (len(original_shape.exterior.coords)-1)*4
+    tmpObstaclePolygon = []
+    for cSpacetmpIndex in range(len(original_shape.exterior.coords)-1):
+        tmpObstaclePoints[cSpacetmpIndex*4] =tuple(map(lambda i, j: i + j, original_shape.exterior.coords[cSpacetmpIndex] , (0, r)))
+        tmpObstaclePoints[cSpacetmpIndex*4 + 1] = tuple(map(lambda i, j: i + j, original_shape.exterior.coords[cSpacetmpIndex] , (r, 0)))
+        tmpObstaclePoints[cSpacetmpIndex*4 + 2] = tuple(map(lambda i, j: i + j, original_shape.exterior.coords[cSpacetmpIndex] , (0, -r)))
+        tmpObstaclePoints[cSpacetmpIndex*4 + 3] = tuple(map(lambda i, j: i + j, original_shape.exterior.coords[cSpacetmpIndex] , (-r, 0)))
+
+    tmpObstaclePolygon = Polygon(tmpObstaclePoints)
+    # print(tmpObstaclePoints)
+    # print(tmpObstaclePolygon.convex_hull)
+
+    return tmpObstaclePolygon.convex_hull
 
 
 # TODO
